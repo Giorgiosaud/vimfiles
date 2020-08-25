@@ -32,9 +32,9 @@ set showmatch
 set noerrorbells visualbell t_vb=
 set rtp+=/usr/local/opt/fzf
 
-"map <leader>p :FZF<CR>
+map <leader>p :FZF<CR>
 "map <C-p> :FZF<CR>
-nnoremap <leader>p :FilesMru --tiebreak=index<cr>
+"nnoremap <leader>p :FilesMru --tiebreak=index<cr>
 map <C-p> :FilesMru --tiebreak=index<CR>
 
 map <leader>s :source ~/.vimrc<CR>
