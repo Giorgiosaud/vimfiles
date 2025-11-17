@@ -52,19 +52,11 @@ let g:lightline = {
 \ 'colorscheme': 'seoul256',
 \ }
 
-nnoremap <silent><leader>f :call PhpCsFixerFixFile()<CR>
-
 let $FZF_DEFAULT_COMMAND = 'ag --skip-vcs-ignores -g ""'
 
 let g:fzf_filemru_bufwrite = 1
 let g:fzf_filemru_git_ls = 1
 let g:fzf_filemru_ignore_submodule = 1
-
-"This runs the full PHPUnit suite.
-nnoremap ,t :!phpunit<cr>
-
-"This runs the test method under the cursor.
-nmap ,tm ?functionwviwy:!phpunit --filter <c-r>"<CR>
 
 nmap <leader>e :MRU<CR>
 
@@ -76,39 +68,16 @@ nmap <C-]> g<C-]>
 
 imap jj <Esc>
 
-"Syntastic recommended default settings.
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"ALE configuration
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 1
+let g:ale_fix_on_save = 0
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_php_checkers = ['php', 'phpmd']
-
-"A list of regexes for phpcs messages to ignore. I don't care about any of
-"these detections.
-let g:syntastic_quiet_messages = { "regex": 'Missing @return\|Missing parameter comment\|Missing class doc comment\|Missing file doc comment' }
-
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
-
-
-function! IPhpExpandClass()
-    call PhpExpandClass()
-    call feedkeys('a', 'n')
-endfunction
-autocmd FileType php inoremap <Leader>q <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>q :call PhpExpandClass()<CR>
-
-imap <C-J> <Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
+"UltiSnips configuration
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_enable_on_vim_startup = 1
@@ -119,29 +88,20 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-vinegar'
-Plug 'StanAngeloff/php.vim'
-Plug 'stephpy/vim-php-cs-fixer'
 Plug 'yegappan/mru'
-Plug 'vim-syntastic/syntastic'
-Plug 'arnaud-lb/vim-php-namespace'
+Plug 'dense-analysis/ale'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tweekmonster/fzf-filemru'
-
-"Snipmate dependencies
-Plug 'garbas/vim-snipmate'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
 Plug 'nathanaelkane/vim-indent-guides'
+
+"Color scheme
+Plug 'chriskempson/vim-tomorrow-theme'
 call plug#end()
 
-
 "Tips
-" If there are Syntastic errors on the page, do :Errors to read the list.
+" If there are ALE errors on the page, do :ALEDetail to read details.
 " ltag methodName and then lopen to view all symbols.
-
-"regenerate tags with
-" ctags -R --PHP-kinds=cfi --regex-php="/^[ \t]*trait[ \t]+([a-z0_9_]+)/\1/t,traits/i"
 " gc will comment out the selection.
